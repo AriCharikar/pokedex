@@ -11,7 +11,7 @@ const prevButton = document.querySelector('.prev-button');
 const nextButton = document.querySelector('.next-button');
 const powerButton = document.querySelector('.power-button');
 
-//Pokemon types for background colors
+//Pokemon types for background colors, heavily inspired by Justin Kim's tutorial on youtube to help classify the pokemon into different categories based on their type and then to change their bakground.
 const types = [
     'normal', 'fighting', 'flying',
     'poison', 'ground', 'rock',
@@ -20,7 +20,6 @@ const types = [
     'bug', 'ghost', 'steel',
     'fire', 'water', 'grass'
 ];
-
 
 //Initialized pokemon list for initial load
 getPokemonList('https://pokeapi.co/api/v2/pokemon?offset=0&limit=5');
@@ -50,7 +49,7 @@ powerButton.addEventListener('click', function() {
 });
 
 for (const pokemonItem of pokemonList) {
-    pokemonItem.addEventListener('click', function (e) {
+    pokemonItem.addEventListener('click', function(e) {
         const id = e.target.textContent.split('.')[0];
         getPokemonData(id);
     });
@@ -60,21 +59,21 @@ for (const pokemonItem of pokemonList) {
 function getPokemonData(id) {
     fetch(`https://pokeapi.co/api/v2/pokemon/${id}`)
     .then(res => res.json())
-    .then(data => {
+    .then(pokemon => {
         screen.classList.remove('hidden');
         screen.classList.remove(...types);
         
-        pokemonName.textContent = data.name;
-        pokemonID.textContent = '#' + data.id;
+        pokemonName.textContent = pokemon.name;
+        pokemonID.textContent = '#' + pokemon.id;
 
-        pokemonFront.src = data.sprites.front_default;
-        pokemonBack.src = data.sprites.back_default;
-        if(!data.sprites.back_default) {
+        pokemonFront.src = pokemon.sprites.front_default;
+        pokemonBack.src = pokemon.sprites.back_default;
+        if(!pokemon.sprites.back_default) {
             pokemonFront.style.margin = '0px';
             pokemonBack.style.margin = '0px';
         }
         
-        const pokemonType = data.types;
+        const pokemonType = pokemon.types;
         pokemonTypeOne.textContent = pokemonType[0]['type']['name'];
         screen.classList.add(pokemonType[0]['type']['name']);
         
@@ -96,24 +95,22 @@ function getPokemonData(id) {
 function getPokemonList(url) {
     fetch(url)
     .then(res => res.json())
-    .then(data => {
-        const resultArray = data.results;
-        nextURL = data.next;
-        prevURL = data.previous;
+    .then(pokemon => {
+        const resultArray = pokemon.results;
+        nextURL = pokemon.next;
+        prevURL = pokemon.previous;
         
-        for (let i = 0; pokemonList.length; i++) {
+        //For loop was inpsired by Justin Kim's tutorial on youtube, which explains to use a for loop instead of a for of loop in order to retrieve the index of the looped item.
+        for (let i = 0; resultArray.length; i++) {
             const pokemonItem = pokemonList[i];
             const pokemonInfoData = resultArray[i];
-
-            if (pokemonInfoData) {
-                const nameDisplay = pokemonInfoData.name;
-                const idDisplay = pokemonInfoData.url;
-                const urlArray = idDisplay.split('/');
-                const id = urlArray[urlArray.length - 2];
-                pokemonItem.textContent = id + '. ' + nameDisplay;
-            } else {
-                pokemonItem.textContent = '';
-            }
+            const nameDisplay = pokemonInfoData.name;
+            const idDisplay = pokemonInfoData.url;
+            const urlArray = idDisplay.split('/');
+            const id = urlArray[urlArray.length - 2];
+            pokemonItem.textContent = id + '. ' + nameDisplay;
         }
 });
 }
+
+//Shoutout to Justin Kim's tutorial on making a pokedex and inspiration for the Javascript. https://www.youtube.com/watch?v=wXjSaZb67n8&t=1s&ab_channel=JustinKim
