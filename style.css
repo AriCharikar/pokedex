@@ -16,9 +16,9 @@ body {
 .pokedex {
     display: flex;
     flex-direction: row;
-    width: 70vw;
+    width: 800px;
     margin: 0 auto;
-    height: 80vh;
+    height: 550px;
 }
 
 .display-container {
@@ -40,6 +40,8 @@ body {
 
 .above-screen-container {
     display: flex;
+    flex-direction: row;
+    align-items: center;
     justify-content: flex-start;
     height: 12%;
 }
@@ -73,35 +75,8 @@ body {
     align-items: center;
 }
 
-.pokemon-selector {
-    height: 80%;
-    width: 70%;
-    border: 1px solid black;
-    display: flex;
-    flex-direction: column;
-}
-
-.pokemon-selector > * {
-    border: 1px solid black;
-    width: 100%;
-    height: 20%;
-}
-
-.pokemon-selector-specific {
-    width: 80%;
-    height: 10%;
-    border: 1px solid black;
-    margin: 0 auto;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.pokemon-selector-specific > * {
-    width: 10%;
-    border: 1px solid black;
-    height: 80%;
-    margin: 0 5px;
+.pokemon-selector > *:hover {
+    background: lightblue;
 }
 
 .pokemon-selector-navigator {
@@ -114,13 +89,6 @@ body {
     align-items: center;
 }
 
-.pokemon-selector-navigator > * {
-    border: 1px solid black;
-    width: 40%;
-    height: 60%;
-    margin: 0 15px;
-}
-
 /* Essential stylings for the general pokedex structure */
 
 .power-button {
@@ -128,20 +96,19 @@ body {
     height: 35px;
     border-radius: 50%;
     background-color: blue;
-    margin: 15px;
     border: 1px solid black;
+    margin: 0 20px;
 }
 
 .option-buttons {
     display: flex;
-    align-items: center;
 }
 
 .option-buttons > *{
     width: 20px;
     height: 20px;
     border-radius: 50%;
-    margin-left: 5px;
+    margin-left: 7px;
     border: 1px solid black;
 }
 
@@ -177,7 +144,11 @@ body {
     flex-direction: column;
 }
 
-.screen-pokemon-name {
+.hidden {
+    display: none;
+}
+
+.screen-pokemon-identity {
     height: 25%;
     border: 1px solid black;
     width: 100%;
@@ -186,6 +157,10 @@ body {
     display: flex;
     justify-content: space-around;
     align-items: center;
+}
+
+.pokemon-name {
+    text-transform: capitalize;
 }
 
 .screen-pokemon-image {
@@ -197,8 +172,13 @@ body {
     align-items: center;
 }
 
+.screen img {
+    height: 100px;
+    width: 100px;
+}
+
 .pokemon-front-image, .pokemon-back-image {
-    margin: 0 30px;
+    margin: 0 10px;
 }
 
 .screen-pokemon-type {
@@ -209,6 +189,11 @@ body {
     height: 25%;
     border-bottom-left-radius: 2rem;
     border-bottom-right-radius: 2rem;
+}
+
+.pokemon-type-one, .pokemon-type-two {
+    margin: 0 25px;
+    text-transform: capitalize;
 }
 
 /* Screen container */
@@ -230,7 +215,7 @@ body {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    height: 20%;
+    height: 20px;
 }
 
 .controller-slit-container > * {
@@ -245,9 +230,52 @@ body {
 
 /* Below screen container */
 
+.pokemon-selector {
+    height: 80%;
+    width: 70%;
+    border: 1px solid black;
+    display: flex;
+    flex-direction: column;
+}
+
+.pokemon-selector > * {
+    border: 1px solid black;
+    width: 100%;
+    height: 20%;
+    text-transform: capitalize;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
 
 
 /* Selector top section */
+
+.pokemon-selector-specific {
+    width: 80%;
+    height: 10%;
+    border: 1px solid black;
+    margin: 0 auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.pokemon-selector-specific > * {
+    width: 10%;
+    border: 1px solid black;
+    height: 80%;
+    margin: 0 5px;
+}
+
+/* Selector middle section */
+
+.pokemon-selector-navigator > * {
+    border: 1px solid black;
+    width: 40%;
+    height: 60%;
+    margin: 0 15px;
+}
 
 .prev-button, .next-button {
     display: flex;
@@ -263,3 +291,164 @@ body {
 }
 
 /* Selector bottom section */
+
+
+.normal {
+    background: #BABAAE;
+}
+
+.fighting {
+    background: #A75543;
+}
+
+.flying {
+    background: #78A2FF;
+}
+
+.poison {
+    background: #A95CA0;
+}
+
+.ground {
+    background: #EECC55;
+}
+
+.rock {
+    background: #CCBD72;
+}
+
+.bug {
+    background: #C2D21E;
+}
+
+.ghost {
+    background: #7975D7;
+}
+
+.steel {
+    background: #C4C2DB;
+}
+
+.fire {
+    background: #FA5643;
+}
+
+.water {
+    background: #56ADFF;
+}
+
+.grass {
+    background: #8CD750;
+}
+
+.electric {
+    background: #FDE139;
+}
+
+.psychic {
+    background: #FA65B4;
+}
+
+.ice {
+    background: #96F1FF;
+}
+
+.dragon {
+    background: #8673FF;
+}
+
+.dark {
+    background: #8D6855;
+}
+
+.fairy {
+    background: #F9AEFF;
+}
+
+/* Pokemon Types Background-color */
+
+
+@media screen and (max-width: 900px) {
+    .pokedex {
+        width: 650px;
+        height: 446px;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .pokedex {
+        flex-direction: column;
+        width: 600px;
+        height: 600px;
+    }
+    
+    .display-container, .selector-container {
+        width: 100%;
+    }
+
+    .power-button {
+        height: 30px;
+        width: 30px;
+    }
+    .option-buttons > * {
+        height: 17px;
+        width: 17px;
+    }
+    .screen img {
+        height: 75px;
+        width: 75px;
+    }
+    
+    .pokemon-front-image, .pokemon-back-image {
+        margin: 0 30px;
+    }
+
+    .controller-square {
+        width: 50px;
+        height: 50px;
+    }
+}
+
+@media screen and (max-width: 650px) {
+    .pokedex {
+        width: 450px;
+        height: 500px;
+    }
+    .power-button {
+        height: 27px;
+        width: 27px;
+    }
+    .option-buttons > * {
+        height: 14px;
+        width: 14px;
+    }
+
+    .screen img {
+        height: 50px;
+        width: 50px;
+    }
+
+    .controller-button {
+        height: 30px;
+        width: 30px;
+    }
+
+    .controller-square {
+        width: 35px;
+        height: 35px;
+    }
+}
+
+@media screen and (max-width: 500px) {
+    .pokedex {
+        width: 300px;
+    }
+    .pokemon-selector-container, 
+    .pokemon-selector-specific, 
+    .pokemon-selector-navigator {
+        width: 100%;
+    }
+
+}
+
+/* Media queries */
