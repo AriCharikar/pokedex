@@ -9,48 +9,66 @@ const pokemonList = document.querySelectorAll('.poke-list');
 const screen = document.querySelector('.screen');
 const prevButton = document.querySelector('.prev-button');
 const nextButton = document.querySelector('.next-button');
+const powerButton = document.querySelector('.power-button');
+
+//Pokemon types for background colors
+const types = [
+    'normal', 'fighting', 'flying',
+    'poison', 'ground', 'rock',
+    'electric', 'psychic', 'ice',
+    'dragon', 'dark', 'fairy',
+    'bug', 'ghost', 'steel',
+    'fire', 'water', 'grass'
+];
+
+
+//Initialized pokemon list for initial load
+getPokemonList('https://pokeapi.co/api/v2/pokemon?offset=0&limit=5');
+
 
 //Event listeners
-prevButton.addEventListener('click', prevButtonClick);
-nextButton.addEventListener('click', nextButtonClick);
-for (const pokemonItem of pokemonList) {
-    pokemonItem.addEventListener('click', clickPokemonItem);
-}
+prevButton.addEventListener('click', function(e) {
+    if(prevURL) {
+        getPokemonList(prevURL);
+    }
+});
 
-//Initialized Buttons
-let prevURL = null;
-let nextURL = null;
+nextButton.addEventListener('click', function(e) {
+    if(nextURL === "https://pokeapi.co/api/v2/pokemon?offset=150&limit=5") {
+        return;
+    }
+    getPokemonList(nextURL);
+});
+
+powerButton.addEventListener('click', function() {
+    if (screen.classList.contains('hidden')) {
+        const randomPokemon = Math.floor(Math.random() * 151);
+        getPokemonData(randomPokemon);
+    } else {
+        screen.classList.add('hidden');
+    }
+});
+
+for (const pokemonItem of pokemonList) {
+    pokemonItem.addEventListener('click', function (e) {
+        const id = e.target.textContent.split('.')[0];
+        getPokemonData(id);
+    });
+}
 
 //Functions for pokemon display container
-
-function removeBackgroundColor() {
-    const types = [
-        'normal', 'fighting', 'flying',
-        'poison', 'ground', 'rock',
-        'bug', 'ghost', 'steel',
-        'fire', 'water', 'grass',
-        'electric', 'psychic', 'ice',
-        'dragon', 'dark', 'fairy'
-    ];
-
-    for(const type of types) {
-        screen.classList.remove(type);
-    }
-}
-
 function getPokemonData(id) {
     fetch(`https://pokeapi.co/api/v2/pokemon/${id}`)
     .then(res => res.json())
     .then(data => {
         screen.classList.remove('hidden');
-
-        removeBackgroundColor();
+        screen.classList.remove(...types);
         
         pokemonName.textContent = data.name;
-        pokemonID.textContent = '#' + data.id.toString().padStart(3, '0');
+        pokemonID.textContent = '#' + data.id;
 
-        pokemonFront.src = data.sprites.front_default || '';
-        pokemonBack.src = data.sprites.back_default || '';
+        pokemonFront.src = data.sprites.front_default;
+        pokemonBack.src = data.sprites.back_default;
         if(!data.sprites.back_default) {
             pokemonFront.style.margin = '0px';
             pokemonBack.style.margin = '0px';
@@ -99,31 +117,3 @@ function getPokemonList(url) {
         }
 });
 }
-
-function nextButtonClick(e) {
-    if(nextURL === "https://pokeapi.co/api/v2/pokemon?offset=150&limit=5") {
-        return;
-    }
-    getPokemonList(nextURL);
-}
-
-function prevButtonClick(e) {
-    if(prevURL) {
-        getPokemonList(prevURL);
-    }
-}
-
-function clickPokemonItem(e) {
-    if (!e.target) return;
-
-    const listItem = e.target;
-    if (!listItem.textContent) return;
-
-    const id = listItem.textContent.split('.')[0];
-    getPokemonData(id);
-}
-
-
-//Initialized pokemon list for initial click
-
-getPokemonList('https://pokeapi.co/api/v2/pokemon?offset=0&limit=5');
