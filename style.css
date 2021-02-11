@@ -116,6 +116,7 @@ body {
     border-radius: 50%;
     margin-left: 7px;
     border: 3px solid black;
+    cursor: pointer;
 }
 
 .option-button-red {
@@ -208,13 +209,14 @@ body {
     width: 35px;
     border-radius: 50%;
     border: 3px solid black;
+    cursor: pointer;
     background: pink;
 }
-
 .controller-square {
     height: 70px;
     width: 70px;
     border: 3px solid black;
+    cursor: pointer;
     background: grey;
 }
 
